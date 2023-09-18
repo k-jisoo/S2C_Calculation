@@ -65,6 +65,7 @@ int main()
 
 	string str;
 	getline(cin, str);
+
 	int sendByte = send(clientSocket, str.c_str(), (int)strlen(str.c_str()), 0);
 	if (sendByte <= 0)
 	{
@@ -86,7 +87,6 @@ int main()
 	string res(buffer);
 
 	cout << stoi(res) << endl;
-	//cout << (int)buffer[0] << endl;
 
 	closesocket(clientSocket);
 	

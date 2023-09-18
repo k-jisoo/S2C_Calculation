@@ -37,15 +37,6 @@ int main()
 	char buffer[1024] = { 0, };
 
 	int recvByte = recv(serverSocket, buffer, sizeof(buffer), 0);
-	string str(buffer);
-	string Cnum1 = str.substr(0, 2);
-	string op = str.substr(3, 1);
-	string Cnum2 = str.substr(5, 2);
-	double num1 = stoi(Cnum1);
-	double num2 = stoi(Cnum2);
-	
-	int res = Cal(num1, num2, op);
-
 	if (recvByte <= 0)
 	{
 		cout << "RecvByte Error" << endl;
@@ -54,10 +45,19 @@ int main()
 	}
 
 	char message[1024] = { 0,  };
+
+	string str(buffer);
+	string Cnum1 = str.substr(0, 2);
+	string op = str.substr(3, 1);
+	string Cnum2 = str.substr(5, 2);
+	int num1 = stoi(Cnum1);
+	int num2 = stoi(Cnum2);
+
+	int res = Cal(num1, num2, op);
+
 	sprintf(message, "%d", res);
-	const char* charPointer = message;
-	cout << charPointer << endl;
-	int sendByte = send(serverSocket, charPointer, (int)strlen(charPointer), 0);
+
+	int sendByte = send(serverSocket, message, (int)strlen(message), 0);
 	if (sendByte <= 0)
 	{
 		cout << "Send Error" << endl;
