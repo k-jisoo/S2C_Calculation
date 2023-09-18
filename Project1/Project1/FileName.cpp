@@ -84,8 +84,9 @@ int main()
 	}
 	
 	string res(buffer);
-	
-	cout << (int)buffer[0] << endl;
+
+	cout << stoi(res) << endl;
+	//cout << (int)buffer[0] << endl;
 
 	closesocket(clientSocket);
 	

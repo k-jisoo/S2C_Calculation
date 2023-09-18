@@ -10,6 +10,9 @@ using namespace std;
 #include <WinSock2.h>
 
 #pragma comment(lib, "ws2_32")
+
+int Cal(int num1, int num2, string op);
+
 int main()
 {
 	WSAData wsaData;
@@ -40,19 +43,8 @@ int main()
 	string Cnum2 = str.substr(5, 2);
 	double num1 = stoi(Cnum1);
 	double num2 = stoi(Cnum2);
-	int res = 0;
-
-	if (op == "+")
-		res = num1 + num2;
-	else if (op == "-")
-		res = num1 - num2;
-	else if (op == "*")
-		res = num1 * num2;
-	else if (op == "/")
-		res = num1 / num2;
-	else
-		res = 0;
-
+	
+	int res = Cal(num1, num2, op);
 
 	if (recvByte <= 0)
 	{
@@ -61,11 +53,11 @@ int main()
 		exit(-1);
 	}
 
-	cout << "Recv : " << buffer << endl;
-
-	char message[1024] = { res };
-
-	int sendByte = send(serverSocket, message, (int)strlen(message), 0);
+	char message[1024] = { 0,  };
+	sprintf(message, "%d", res);
+	const char* charPointer = message;
+	cout << charPointer << endl;
+	int sendByte = send(serverSocket, charPointer, (int)strlen(charPointer), 0);
 	if (sendByte <= 0)
 	{
 		cout << "Send Error" << endl;
@@ -80,4 +72,22 @@ int main()
 	WSACleanup();
 
 	return 0;
+}
+
+int Cal(int num1, int num2, string op) 
+{
+	int res;
+
+	if (op == "+")
+		res = num1 + num2;
+	else if (op == "-")
+		res = num1 - num2;
+	else if (op == "*")
+		res = num1 * num2;
+	else if (op == "/")
+		res = num1 / num2;
+	else
+		res = 0;
+
+	return res;
 }
